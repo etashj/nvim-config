@@ -10,3 +10,13 @@ vim.opt.softtabstop = 2
 
 --user number of spaces to inser a <Tab>
 vim.opt.expandtab = true
+
+-- set theme
+vim.cmd ('colorscheme slate')
+
+-- custom cmd-f equivalent to search document for selection
+vim.keymap.set('v', '/', function()
+  vim.cmd('normal! "zy')
+  vim.fn.setreg('/', vim.fn.escape(vim.fn.getreg('z'), [[\/.*$^~[]\]]))
+  vim.cmd('normal! n')
+end, {noremap=true, silent=true})
