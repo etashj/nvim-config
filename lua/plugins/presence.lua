@@ -1,5 +1,5 @@
 return {
-  'andweeb/presence.nvim', 
+  "jiriks74/presence.nvim",
   opts = {
     main_image = "file",
     line_number_text    = "Line %s out of %s",
