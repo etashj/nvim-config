@@ -22,4 +22,18 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
+  update_focused_file = {
+    enable = true,
+  },
 })
+
+vim.keymap.set("n", "<leader>e", function() vim.cmd("NvimTreeFocus") end) 
+
+-- Autocmd to open NvimTree and highlight the current file
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Open the tree and find the file
+    require("nvim-tree.api").tree.open({ find_file = false, focus = false })
+  end
+})
+
