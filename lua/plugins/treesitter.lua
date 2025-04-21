@@ -6,7 +6,7 @@ return {{
 
       configs.setup({
           ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", 
-                              "python", "java", "javadoc", "cpp", "go", "latex", "html", "json", "css", "javascript"},
+                              "python", "java", "javadoc", "cpp", "go", "latex", "html", "json", "css", "javascript", "regex", "bash"},
           sync_install = false,
           auto_install = true,
           highlight = { enable = true },
