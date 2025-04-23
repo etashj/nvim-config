@@ -17,6 +17,7 @@ vim.opt.hlsearch = true
 -- set theme
 --vim.cmd ([[colorscheme slate]])
 require('kanagawa').setup({
+  backgroud = {dark = "wave"}, 
   overrides = function(colors)
     local theme = colors.theme
     local makeDiagnosticColor = function(color)
