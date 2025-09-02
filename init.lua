@@ -7,6 +7,7 @@ require("mason").setup()
 require("mason-lspconfig").setup()
 require("config.tree")
 
+--[[
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler
   -- and will be called for each installed server that doesn't have
@@ -20,6 +21,7 @@ require("mason-lspconfig").setup_handlers {
     require("rust-tools").setup {}
   end
 }
+]]
 
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup {
@@ -48,3 +50,34 @@ lspconfig.lua_ls.setup {
     },
   },
 }
+
+
+-- Create an augroup to avoid duplicate autocmds
+vim.api.nvim_create_augroup("LaTeXAutoCompile", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = "LaTeXAutoCompile",
+  pattern = "*.tex",  -- Only trigger on .tex files
+  callback = function()
+    local file = vim.fn.expand("%:p")   -- full path of current file
+    local dir  = vim.fn.expand("%:p:h") -- directory of current file
+    local name = vim.fn.expand("%:t:r") -- file name without extension
+
+    -- Run pdflatex, output PDF to same directory
+    vim.fn.jobstart(
+      { "pdflatex", "-interaction=nonstopmode", "-output-directory=" .. dir, file },
+      {
+        cwd = dir,
+        on_exit = function(_, code)
+          if code == 0 then
+            vim.notify("✅ PDF compiled: " .. dir .. "/" .. name .. ".pdf", vim.log.levels.INFO)
+            -- vim.fn.jobstart({ "open", dir .. "/" .. name .. ".pdf" }, { detach = true })
+          else
+            vim.notify("❌ pdflatex failed!", vim.log.levels.ERROR)
+          end
+        end,
+      }
+    )
+  end,
+})
+
