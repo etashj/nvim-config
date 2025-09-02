@@ -7,6 +7,16 @@ require("mason").setup()
 require("mason-lspconfig").setup()
 require("config.tree")
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.c0",
+  callback = function()
+    -- Example: set filetype and run a command
+  vim.cmd.source("/Users/etashj/.config/nvim/lua/c0/c0.vim")
+vim.cmd.source("/Users/etashj/.config/nvim/lua/c0/c0-detect.vim")
+  end,
+})
+
+
 --[[
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler
